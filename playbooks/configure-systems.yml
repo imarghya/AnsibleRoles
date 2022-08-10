@@ -1,12 +1,14 @@
----
-- hosts: 23.227.204.194 
-  tasks:
-    - name: Update repository
-      apt_repository:
-       repo: 'ppa:git-core/ppa'
-       state: present
-    - name: Install git
-      apt:
-       name: git
-       state: present
-       update_cache: yes
+    ---
+    - hosts: gitservers
+      tasks:
+        - name: Update APT package manager repositories cache
+          become: true
+          apt:
+            update_cache: yes
+    
+        - name: Install Git Package
+          become: true
+          apt:
+            name: git
+            state: latest
+            update_cache: yes
