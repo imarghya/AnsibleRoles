@@ -1,14 +1,14 @@
-# Playbook to call multiple roles to configure systems
-- name: Configure systems
-  hosts: 
-  become: yes
+---
+# tasks file for apache-new
+- name: Running the apt update command
+  shell: apt update
 
-  tasks:
+- name: Installing apache
+  apt:
+    name: apache2
+    state: latest
+    update_cache: yes
 
-- name: Call Roles
-  hosts: servers
-  roles:
-   #- hostname
-   #- firewalld
-   #- ntp-config
-   - motd
+- name: Enabling modules Packages
+  shell: sudo a2enmod rewrite && sudo a2enmod ssl
+  notify: Restart apache2
