@@ -1,0 +1,14 @@
+---
+# tasks file for apache-new
+- name: Running the apt update command
+  shell: apt update
+
+- name: Installing apache
+  apt:
+    name: apache2
+    state: latest
+    update_cache: yes
+
+- name: Enabling modules Packages
+  shell: sudo a2enmod rewrite && sudo a2enmod ssl
+  notify: Restart apache2
